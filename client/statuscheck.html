@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Status Check - Mental Embrace</title>
+    <link rel="stylesheet" href="statuscheck.css">
+</head>
+<body>
+    <header>
+        <h1>Mental Embrace</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="statuscheck.html" class="active">Status Check</a></li>
+                <li><a href="aboutus.html">About us</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="status-check">
+            <h2>Check Your Mental Health Status</h2>
+            <form id="status-form">
+                <label for="question1">How often do you feel anxious?</label>
+                <select id="question1">
+                    <option value="1">Rarely</option>
+                    <option value="2">Sometimes</option>
+                    <option value="3">Often</option>
+                    <option value="4">Almost Always</option>
+                </select>
+
+                <label for="question2">Do you have trouble sleeping?</label>
+                <select id="question2">
+                    <option value="1">No</option>
+                    <option value="2">Occasionally</option>
+                    <option value="3">Frequently</option>
+                    <option value="4">Always</option>
+                </select>
+
+                <label for="question3">Do you feel overwhelmed with daily tasks?</label>
+                <select id="question3">
+                    <option value="1">Never</option>
+                    <option value="2">Sometimes</option>
+                    <option value="3">Often</option>
+                    <option value="4">Always</option>
+                </select>
+
+                <label for="mood">Overall, how would you describe your mood today?</label>
+                <select id="mood">
+                    <option value="happy">Happy</option>
+                    <option value="sad">Sad</option>
+                    <option value="anxious">Anxious</option>
+                    <option value="excited">Excited</option>
+                    <option value="tired">Tired</option>
+                </select>
+
+                <button type="button" class="btn" onclick="checkStatus()">Submit</button>
+            </form>
+
+            <div id="status-result" class="hidden">
+                <h3>Your Mental Health Status</h3>
+                <p id="status-message"></p>
+                <h4>Your Mood</h4>
+                <p id="mood-message"></p>
+                <div id="video-recommendation">
+                    <h4>Here's a video that might help:</h4>
+                    <a id="video-link" href="#" target="_blank">Watch Video</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Mental Embrace | <a href="contact.html">Contact Us</a></p>
+    </footer>
+
+    <script src="statuscheck.js"></script>
+</body>
+</html>

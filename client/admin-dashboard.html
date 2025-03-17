@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admindashboard.css">
+    
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <button onclick="logoutAdmin()">Logout</button>
+    </header>
+    
+    <main>
+        <h2 id="admin-message">Loading...</h2>
+        <p>Here you can manage website content.</p>
+
+        <section class="admin-actions">
+            <button onclick="manageUsers()">Manage Users</button>
+            <button onclick="editBlog()">Edit Blog Posts</button>
+        </section>
+        <div id="userTableContainer"></div>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const token = localStorage.getItem("adminToken");
+
+            if (!token) {
+                alert("Access Denied! Admins Only.");
+                window.location.href = "admin-login.html";
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:5000/admin-dashboard", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById("admin-message").innerText = result.message;
+                } else {
+                    alert("Access Denied: Invalid Token!");
+                    window.location.href = "admin-login.html";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Server error. Please try again.");
+            }
+        });
+
+        function logoutAdmin() {
+            localStorage.removeItem("adminToken");
+            alert("Logged Out Successfully!");
+            window.location.href = "admin-login.html";
+        }
+
+        async function manageUsers() {
+    try {
+        // Ensure correct API endpoint
+        const response = await fetch('http://localhost:5000/get-users');
+
+        // Check if response is okay
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse response JSON
+        const data = await response.json();
+
+        // Validate API response structure
+        if (!data.success || !Array.isArray(data.users)) {
+            throw new Error("Invalid response format!");
+        }
+
+        // Get users from response
+        const users = data.users;
+
+        // Check if users exist
+        if (users.length === 0) {
+            alert("No users found!");
+            return;
+        }
+
+        // Build table dynamically
+        let tableHTML = `
+            <table border="1" cellspacing="0" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Number</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        users.forEach(user => {
+            tableHTML += `
+                <tr>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.number}</td>
+                    <td>${user.message}</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `</tbody></table>`;
+
+        // Insert table into the div
+        document.getElementById("userTableContainer").innerHTML = tableHTML;
+
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        alert("Failed to fetch user data!");
+    }
+}
+
+
+
+        function editBlog() {
+            alert("Blog Editor Coming Soon!");
+        }
+    </script>
+   
+</body>
+</html>
