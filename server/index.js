@@ -23,8 +23,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-// Debugging: Ensure JWT_SECRET is loaded
-console.log("Loaded JWT Secret:", process.env.JWT_SECRET);
+
 
 // 🔹 Handle Form Submission
 app.post('/submit-form', async (req, res) => {
